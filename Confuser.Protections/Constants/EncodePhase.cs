@@ -93,9 +93,12 @@ namespace Confuser.Protections.Constants {
 			var key = new uint[0x10];
 			uint state = keySeed;
 			for (int i = 0; i < 0x10; i++) {
-				state ^= state >> 12;
-				state ^= state << 25;
-				state ^= state >> 27;
+				//state ^= state >> 12;
+				//state ^= state << 25;
+				//state ^= state >> 27;
+				state ^= state >> 11;
+				state ^= state << 23;
+				state ^= state >> 26;
 				key[i] = state;
 			}
 
@@ -171,7 +174,7 @@ namespace Confuser.Protections.Constants {
 					buffIndex = EncodeByteArray(moduleCtx, init);
 
 				Tuple<MethodDef, DecoderDesc> decoder = moduleCtx.Decoders[moduleCtx.Random.NextInt32(moduleCtx.Decoders.Count)];
-				uint id = (uint)buffIndex | (uint)(decoder.Item2.InitializerID << 30);
+				uint id = (uint)buffIndex | (uint)(decoder.Item2.InitializerID << 28);
 				id = moduleCtx.ModeHandler.Encode(decoder.Item2.Data, moduleCtx, id);
 
 				instrs[i - 4].Operand = (int)id;
@@ -207,7 +210,7 @@ namespace Confuser.Protections.Constants {
 		void UpdateReference(CEContext moduleCtx, TypeSig valueType, List<Tuple<MethodDef, Instruction>> references, int buffIndex, Func<DecoderDesc, byte> typeID) {
 			foreach (var instr in references) {
 				Tuple<MethodDef, DecoderDesc> decoder = moduleCtx.Decoders[moduleCtx.Random.NextInt32(moduleCtx.Decoders.Count)];
-				uint id = (uint)buffIndex | (uint)(typeID(decoder.Item2) << 30);
+				uint id = (uint)buffIndex | (uint)(typeID(decoder.Item2) << 28);
 				id = moduleCtx.ModeHandler.Encode(decoder.Item2.Data, moduleCtx, id);
 
 				var targetDecoder = new MethodSpecUser(decoder.Item1, new GenericInstMethodSig(valueType));

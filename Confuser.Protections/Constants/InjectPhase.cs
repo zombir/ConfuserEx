@@ -46,7 +46,7 @@ namespace Confuser.Protections.Constants {
 
 				switch (moduleCtx.Mode) {
 					case Mode.Normal:
-						moduleCtx.ModeHandler = new NormalMode();
+						moduleCtx.ModeHandler = new _NormalModeRe();
 						break;
 					case Mode.Dynamic:
 						moduleCtx.ModeHandler = new DynamicMode();
