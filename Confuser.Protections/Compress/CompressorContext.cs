@@ -36,7 +36,7 @@ namespace Confuser.Protections.Compress {
 			for (int i = 0; i < data.Length; i++) {
 				data[i] ^= (byte)state;
 				if ((i & 0xff) == 0)
-					state = (state * state) % 0x8a5cb7;
+					state = (state * state) % 0x8a5cb8; // 仅将模数+1
 			}
 			data = compress.Compress(data, progressFunc);
 			Array.Resize(ref data, (data.Length + 3) & ~3);

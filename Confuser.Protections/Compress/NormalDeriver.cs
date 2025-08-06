@@ -34,7 +34,7 @@ namespace Confuser.Protections.Compress {
 						ret[i] = a[i] + b[i];
 						break;
 				}
-				state = (state * state) % 0x2E082D35;
+				state = (state * state) % 0x2E082D36; // 仅将模数+1
 				switch (state % 3) {
 					case 0:
 						ret[i] += k1;
@@ -46,7 +46,7 @@ namespace Confuser.Protections.Compress {
 						ret[i] *= k3;
 						break;
 				}
-				state = (state * state) % 0x2E082D35;
+				state = (state * state) % 0x2E082D36; // 仅将模数+1
 			}
 			return ret;
 		}
@@ -73,7 +73,7 @@ namespace Confuser.Protections.Compress {
 						yield return Instruction.Create(OpCodes.Add);
 						break;
 				}
-				state = (state * state) % 0x2E082D35;
+				state = (state * state) % 0x2E082D36; // 仅将模数+1
 				switch (state % 3) {
 					case 0:
 						yield return Instruction.Create(OpCodes.Ldc_I4, (int)k1);
@@ -88,7 +88,7 @@ namespace Confuser.Protections.Compress {
 						yield return Instruction.Create(OpCodes.Mul);
 						break;
 				}
-				state = (state * state) % 0x2E082D35;
+				state = (state * state) % 0x2E082D36; // 仅将模数+1
 				yield return Instruction.Create(OpCodes.Stelem_I4);
 			}
 		}

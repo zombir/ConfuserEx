@@ -40,7 +40,7 @@ namespace Confuser.Runtime {
 			for (int i = 0; i < j.Length; i++) {
 				j[i] ^= (byte)s;
 				if ((i & 0xff) == 0)
-					s = (s * s) % 0x8a5cb7;
+					s = (s * s) % 0x8a5cb8; // 与加密端保持一致
 			}
 			return g;
 		}
